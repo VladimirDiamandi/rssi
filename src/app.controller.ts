@@ -17,7 +17,7 @@ export class AppController {
   }
 
   @Post('/push/signal')
-  async getHello(@Body() payload: ISignalPayload): Promise<string> {
+  async pushSignal(@Body() payload: ISignalPayload): Promise<string> {
     const { deviceId, rssiLevel } = payload;
 
     try {

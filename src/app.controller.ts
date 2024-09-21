@@ -24,7 +24,7 @@ export class AppController {
       const device = await this.deviceService.getById(deviceId);
       await this.signalService.create({ device, rssiLevel });
       if (rssiLevel < this.MIN_VALUE) {
-        await this.deviceService.selLost(device);
+        await this.deviceService.setLost(device);
       } else {
         await this.deviceService.setActive(device);
       }

@@ -10,7 +10,7 @@ export class DeviceService {
     return await this.deviceModel.findById(id);
   }
 
-  async selLost(device: Device) {
+  async setLost(device: Device) {
     if (device.lostAt) {
       return;
     }

@@ -14,8 +14,19 @@ export class Scheduler {
   async checkLostSignals() {
     try {
       const lostDevices = await this.deviceService.getLost();
+      let zones = [];
       for (const lostDevice of lostDevices) {
         await this.alertService.pushAlert({ deviceId: String(lostDevice._id), last: lostDevice.lostAt});
+        if (!zones.includes(lostDevice.zone)) {
+          zones.push(lostDevice.zone);
+        }
+      }
+
+      for (const zone of zones) {
+        const active = await this.deviceService.getActiveByZone(zone);
+        if (active === 0) {
+          // todo set Zone Lost alert
+        }
       }
     } catch (error) {
       console.error('Scheduler run error', error.message, error.stack);

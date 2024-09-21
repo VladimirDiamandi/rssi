@@ -29,4 +29,17 @@ export class DeviceService {
     date.setMinutes(-5);
     return await this.deviceModel.find({lostAt: {$lte: date} });
   }
+
+  async getActiveByZone(zone: string) {
+    const date = new Date();
+    date.setMinutes(-5);
+    return await this.deviceModel.countDocuments({
+      zone,
+      $or: [
+        {lostAt: {$gt: date} },
+        {lostAt: {$exists: false}},
+        {lostAt: null},
+      ]
+    });
+  }
 }
